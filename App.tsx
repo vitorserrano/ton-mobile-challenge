@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { StatusBar } from 'expo-status-bar'
 import AppLoading from 'expo-app-loading'
+import FlashMessage from 'react-native-flash-message'
 
 import {
   useFonts,
@@ -13,7 +13,9 @@ import {
 import { ThemeProvider } from 'styled-components'
 
 import { appTheme } from './src/styles/theme'
-import { Products } from './src/pages/Products'
+import { Routes } from './src/routes'
+
+import { StatusBar } from './src/components'
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -28,8 +30,10 @@ const App = () => {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <StatusBar style="light" />
-      <Products />
+      <StatusBar variant="primary" />
+      <Routes />
+
+      <FlashMessage position="bottom" />
     </ThemeProvider>
   )
 }
