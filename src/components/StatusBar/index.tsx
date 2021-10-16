@@ -18,12 +18,14 @@ export const StatusBar = ({ variant, ...rest }: StatusBarProps) => {
   const { colors } = useContext(ThemeContext)
 
   const colorsVariant = {
-    primary: { backgroundColor: colors.lightGreen, barStyle: 'light-content' },
+    primary: { backgroundColor: colors.green500, barStyle: 'light-content' },
     secondary: { backgroundColor: colors.background, barStyle: 'dark-content' },
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: colors.lightGreen }}>
+    <SafeAreaView
+      style={{ backgroundColor: colorsVariant[variant].backgroundColor }}
+    >
       <StyledStatusBar
         backgroundColor={colorsVariant[variant].backgroundColor}
         barStyle={colorsVariant[variant].barStyle as StatusBarStyle}

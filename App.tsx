@@ -12,10 +12,9 @@ import {
 
 import { ThemeProvider } from 'styled-components'
 
+import { CartProvider } from './src/context/cart'
 import { appTheme } from './src/styles/theme'
 import { Routes } from './src/routes'
-
-import { StatusBar } from './src/components'
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -29,12 +28,13 @@ const App = () => {
   }
 
   return (
-    <ThemeProvider theme={appTheme}>
-      <StatusBar variant="primary" />
-      <Routes />
+    <CartProvider>
+      <ThemeProvider theme={appTheme}>
+        <Routes />
 
-      <FlashMessage position="bottom" />
-    </ThemeProvider>
+        <FlashMessage position="bottom" />
+      </ThemeProvider>
+    </CartProvider>
   )
 }
 

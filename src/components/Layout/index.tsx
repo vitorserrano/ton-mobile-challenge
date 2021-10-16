@@ -6,6 +6,6 @@ type LayoutProps = {
   children: ReactNode
 }
 
-export const Layout = ({ children }: LayoutProps) => {
-  return <Container>{children}</Container>
-}
+export const Layout = ({ children }: LayoutProps) => (
+  <Container>{children}</Container>
+)
