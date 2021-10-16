@@ -1,22 +1,28 @@
 import React from 'react'
-import { Text } from 'react-native'
 
 import { ProductProps } from '../../services/procucts'
+
 import {
   Container,
   Image,
   Name,
   Amount,
   DicountAmount,
-  AddButton,
-  AddIcon,
+  ActionButton,
+  ActionIcon,
 } from './styles'
 
-type CardProductProps = {
+type ProductCardProps = {
   data: ProductProps
+  onPress: () => void
+  hasCurrentProduct: boolean
 }
 
-export const CardProduct = ({ data }: CardProductProps) => {
+export const ProductCard = ({
+  data,
+  onPress,
+  hasCurrentProduct,
+}: ProductCardProps) => {
   const { name, amount, discount_amount, img_url } = data
 
   return (
@@ -27,9 +33,9 @@ export const CardProduct = ({ data }: CardProductProps) => {
       <Amount>{amount}</Amount>
       <DicountAmount>{discount_amount}</DicountAmount>
 
-      <AddButton onPress={() => console.log('teste')}>
-        <AddIcon />
-      </AddButton>
+      <ActionButton onPress={onPress} hasCurrentProduct={hasCurrentProduct}>
+        <ActionIcon name={hasCurrentProduct ? 'trash' : 'plus'} />
+      </ActionButton>
     </Container>
   )
 }

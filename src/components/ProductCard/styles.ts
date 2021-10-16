@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components/native'
 
+import { TouchableOpacityProps } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+
+type ActionButtonProps = TouchableOpacityProps & {
+  hasCurrentProduct: boolean
+}
 
 export const Container = styled.View`
   ${({ theme: { colors } }) => css`
@@ -9,7 +14,7 @@ export const Container = styled.View`
   `};
 
   flex: 1;
-  max-width: 170px;
+  max-width: 160px;
   padding: 16px;
   margin-top: 30px;
   margin-right: 24px;
@@ -43,16 +48,16 @@ export const Amount = styled.Text`
 
 export const DicountAmount = styled.Text`
   ${({ theme: { colors, fonts } }) => css`
-    color: ${colors.lightGreen};
+    color: ${colors.green500};
     font-family: ${fonts.text500};
     font-size: 18px;
     margin-top: 4px;
   `}
 `
 
-export const AddButton = styled.TouchableOpacity.attrs({
+export const ActionButton = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8,
-})`
+})<ActionButtonProps>`
   justify-content: center;
   align-items: center;
 
@@ -68,12 +73,13 @@ export const AddButton = styled.TouchableOpacity.attrs({
   border-bottom-right-radius: 16px;
   border-bottom-left-radius: 160px;
 
-  background: ${({ theme }) => theme.colors.lightGreen};
+  background: ${({ theme, hasCurrentProduct }) =>
+    hasCurrentProduct ? theme.colors.red500 : theme.colors.green500};
 `
 
-export const AddIcon = styled(Feather).attrs({
-  name: 'plus',
+export const ActionIcon = styled(Feather).attrs(({ name }) => ({
+  name,
   size: 22,
-})`
+}))`
   color: ${({ theme }) => theme.colors.white};
 `

@@ -1,4 +1,4 @@
-import styled from 'styled-components/native'
+import styled, { css } from 'styled-components/native'
 import { FlatList } from 'react-native'
 
 import { LinearGradient } from 'expo-linear-gradient'
@@ -8,7 +8,7 @@ import { Flow } from 'react-native-animated-spinkit'
 import { ProductProps } from '../../services/procucts'
 
 export const Header = styled(LinearGradient).attrs(({ theme: { colors } }) => ({
-  colors: [colors.lightGreen, colors.darkGreen],
+  colors: [colors.green500, colors.green700],
 }))`
   flex-direction: row;
   justify-content: space-between;
@@ -22,11 +22,24 @@ export const Logo = styled.Image`
   height: 53px;
 `
 
+export const CartButton = styled.TouchableOpacity`
+  flex-direction: row;
+`
+
 export const CartIcon = styled(Ionicons).attrs({
   name: 'ios-cart-outline',
   size: 32,
 })`
   color: ${({ theme }) => theme.colors.white};
+`
+
+export const NumberOfCartProducts = styled.Text`
+  ${({ theme: { colors, fonts } }) => css`
+    color: ${colors.white};
+    font-family: ${fonts.text500};
+    font-size: 13px;
+    margin-left: 4px;
+  `}
 `
 
 export const LoaderContainer = styled.View`
@@ -36,9 +49,13 @@ export const LoaderContainer = styled.View`
 `
 
 export const Loader = styled(Flow).attrs(({ theme }) => ({
-  color: theme.colors.lightGreen,
+  color: theme.colors.green500,
   size: 52,
 }))``
+
+export const Container = styled.View`
+  padding-left: 24px;
+`
 
 export const ProductList = styled(
   FlatList as new () => FlatList<ProductProps>
@@ -48,6 +65,4 @@ export const ProductList = styled(
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-})`
-  padding-left: 24px;
-`
+})``

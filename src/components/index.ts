@@ -1,3 +1,5 @@
 export { StatusBar } from './StatusBar'
 export { Layout } from './Layout'
-export { CardProduct } from './CardProduct'
+export { Heading } from './Heading'
+export { ProductCard } from './ProductCard'
+export { CartItem } from './CartItem'
