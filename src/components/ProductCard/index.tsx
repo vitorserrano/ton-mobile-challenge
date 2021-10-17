@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ProductProps } from '../../services/procucts'
+import { formatCurrency } from '../../utils/format'
 
 import {
   Container,
@@ -31,7 +32,7 @@ export const ProductCard = ({
       <Name>{name}</Name>
 
       <Amount>{amount}</Amount>
-      <DicountAmount>{discount_amount}</DicountAmount>
+      <DicountAmount>{formatCurrency(discount_amount)}</DicountAmount>
 
       <ActionButton onPress={onPress} hasCurrentProduct={hasCurrentProduct}>
         <ActionIcon name={hasCurrentProduct ? 'trash' : 'plus'} />

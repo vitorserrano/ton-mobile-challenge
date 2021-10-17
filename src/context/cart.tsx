@@ -1,4 +1,6 @@
 import React, { useState, createContext, useContext, ReactNode } from 'react'
+import { showMessage } from 'react-native-flash-message'
+
 import { ProductProps } from '../services/procucts'
 
 export type CartItemProps = ProductProps & {
@@ -23,11 +25,27 @@ export const CartContext = createContext<CartContextProps>(
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<CartItemProps[]>([])
 
-  const addProduct = (product: ProductProps): void =>
+  const addProduct = (product: ProductProps): void => {
     setCartItems([...cartItems, { ...product, quantity: 1 }])
 
-  const deleteProduct = (product: ProductProps): void =>
+    showMessage({
+      message: 'Sucesso!',
+      description: `${product.name} adicionado ao carrinho.`,
+      type: 'success',
+      icon: 'success',
+    })
+  }
+
+  const deleteProduct = (product: ProductProps): void => {
     setCartItems(cartItems.filter(item => item.id !== product.id))
+
+    showMessage({
+      message: 'Sucesso',
+      description: `${product.name} removido do carrinho.`,
+      type: 'success',
+      icon: 'success',
+    })
+  }
 
   const handleItem = (item: CartItemProps, action: 'add' | 'remove'): void => {
     const arrayItems = cartItems.map(current => {

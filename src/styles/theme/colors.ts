@@ -7,6 +7,7 @@ export const colors = {
   red500: '#ff4f2c',
 
   white: '#FFFFFF',
+  cover: '#e4e4e4',
   background: '#F1F1F1',
   shadow: '0px 6px 4px rgba(245, 251, 255, 0.6)',
   heading: '#20252A',

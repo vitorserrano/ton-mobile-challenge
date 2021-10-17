@@ -5,7 +5,19 @@ import { showMessage } from 'react-native-flash-message'
 
 import { useCart } from '../../context/cart'
 import { getProducts, ProductProps } from '../../services/procucts'
-import { Layout, ProductCard, Heading, StatusBar } from '../../components'
+
+import {
+  Layout,
+  ProductCard,
+  Heading,
+  StatusBar,
+  Loader,
+} from '../../components'
+
+import {
+  ModalProps,
+  RenderDeleteProductModal,
+} from '../../components/DeleteProductModal'
 
 import {
   Header,
@@ -13,8 +25,6 @@ import {
   CartButton,
   CartIcon,
   NumberOfCartProducts,
-  LoaderContainer,
-  Loader,
   Container,
   ProductList,
 } from './styles'
@@ -24,6 +34,7 @@ import logoImg from '../../assets/logo.png'
 export const Products = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [products, setProducts] = useState<ProductProps[]>([])
+  const [modal, setModal] = useState<ModalProps>({ visible: false })
 
   const navigation = useNavigation()
   const { cartItems, addProduct, deleteProduct } = useCart()
@@ -43,17 +54,24 @@ export const Products = () => {
     } finally {
       setTimeout(() => {
         setLoading(false)
-      }, 2000)
+      }, 1000)
     }
   }
 
-  const navigateToCart = () => navigation.navigate('Cart')
+  const navigateToCart = (): void => navigation.navigate('Cart')
 
-  const findProduct = (product: ProductProps) =>
+  const findProduct = (product: ProductProps): boolean =>
     !!cartItems.find(item => item.id === product.id)
 
-  const handleProduct = (product: ProductProps) =>
-    findProduct(product) ? deleteProduct(product) : addProduct(product)
+  const handleDeleteProduct = (product: ProductProps): void =>
+    setModal({
+      visible: true,
+      productName: product.name,
+      onRemove: () => deleteProduct(product),
+    })
+
+  const handleProduct = (product: ProductProps): void =>
+    findProduct(product) ? handleDeleteProduct(product) : addProduct(product)
 
   useEffect(() => {
     loadProducts()
@@ -73,9 +91,7 @@ export const Products = () => {
           </CartButton>
         </Header>
 
-        <LoaderContainer>
-          <Loader />
-        </LoaderContainer>
+        <Loader />
       </Layout>
     )
   }
@@ -109,6 +125,11 @@ export const Products = () => {
           )}
         />
       </Container>
+
+      {RenderDeleteProductModal({
+        ...modal,
+        onClose: () => setModal({ visible: false }),
+      })}
     </Layout>
   )
 }
