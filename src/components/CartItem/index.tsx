@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { CartItemProps } from '../../context/cart'
+import { formatCurrency } from '../../utils/format'
 
 import {
   Container,
@@ -53,7 +54,9 @@ export const CartItem = ({
 
         <TextGroup>
           <Name>{name}</Name>
-          <Amount>{discount_amount}</Amount>
+          <Amount>
+            {formatCurrency(Number(discount_amount) * Number(quantity))}
+          </Amount>
         </TextGroup>
       </Item>
 
