@@ -1,10 +1,15 @@
 import React, { useState, createContext, useContext, ReactNode } from 'react'
 import { ProductProps } from '../services/procucts'
 
+export type CartItemProps = ProductProps & {
+  quantity: number
+}
+
 type CartContextProps = {
-  cartItems: ProductProps[]
+  cartItems: CartItemProps[]
   addProduct: (product: ProductProps) => void
-  removeProduct: (product: ProductProps) => void
+  deleteProduct: (product: ProductProps) => void
+  handleItem: (product: CartItemProps, action: 'add' | 'remove') => void
 }
 
 type CartProviderProps = {
@@ -16,16 +21,36 @@ export const CartContext = createContext<CartContextProps>(
 )
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-  const [cartItems, setCartItems] = useState<ProductProps[]>([])
+  const [cartItems, setCartItems] = useState<CartItemProps[]>([])
 
-  const addProduct = (product: ProductProps) =>
-    setCartItems([...cartItems, product])
+  const addProduct = (product: ProductProps): void =>
+    setCartItems([...cartItems, { ...product, quantity: 1 }])
 
-  const removeProduct = (product: ProductProps) =>
+  const deleteProduct = (product: ProductProps): void =>
     setCartItems(cartItems.filter(item => item.id !== product.id))
 
+  const handleItem = (item: CartItemProps, action: 'add' | 'remove'): void => {
+    const arrayItems = cartItems.map(current => {
+      if (current.id === item.id) {
+        return {
+          ...current,
+          quantity:
+            action === 'add'
+              ? Number(current.quantity) + 1
+              : Number(current.quantity) - 1,
+        }
+      }
+
+      return current
+    })
+
+    setCartItems(arrayItems)
+  }
+
   return (
-    <CartContext.Provider value={{ cartItems, addProduct, removeProduct }}>
+    <CartContext.Provider
+      value={{ cartItems, addProduct, deleteProduct, handleItem }}
+    >
       {children}
     </CartContext.Provider>
   )

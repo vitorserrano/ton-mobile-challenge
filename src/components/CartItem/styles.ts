@@ -43,7 +43,12 @@ export const NumberText = styled.Text`
   color: ${({ theme }) => theme.colors.green700};
 `
 
-export const RemoveItem = styled(Feather).attrs({
+export const RemoveItem = styled.TouchableOpacity`
+  width: 24px;
+  height: 24px;
+`
+
+export const RemoveIcon = styled(Feather).attrs({
   name: 'minus',
   size: 24,
 })`

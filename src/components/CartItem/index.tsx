@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ProductProps } from '../../services/procucts'
+import { CartItemProps } from '../../context/cart'
 
 import {
   Container,
@@ -9,6 +9,7 @@ import {
   NumberContainer,
   NumberText,
   RemoveItem,
+  RemoveIcon,
   Item,
   Image,
   TextGroup,
@@ -18,24 +19,33 @@ import {
   TrashIcon,
 } from './styles'
 
-type CartItemProps = {
-  data: ProductProps
+type CartItemComponentProps = {
+  data: CartItemProps
+  onAdd: () => void
+  onRemove: () => void
   onDelete: () => void
 }
 
-export const CartItem = ({ data, onDelete }: CartItemProps) => {
-  const { name, discount_amount, img_url } = data
+export const CartItem = ({
+  data,
+  onAdd,
+  onRemove,
+  onDelete,
+}: CartItemComponentProps) => {
+  const { name, discount_amount, img_url, quantity } = data
 
   return (
     <Container>
       <QuantityOfItems>
-        <AddItem />
+        <AddItem onPress={onAdd} />
 
         <NumberContainer>
-          <NumberText>2</NumberText>
+          <NumberText>{quantity}</NumberText>
         </NumberContainer>
 
-        <RemoveItem />
+        <RemoveItem>
+          {quantity > 1 && <RemoveIcon onPress={onRemove} />}
+        </RemoveItem>
       </QuantityOfItems>
 
       <Item>

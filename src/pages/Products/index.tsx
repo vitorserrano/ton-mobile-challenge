@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native'
 import { showMessage } from 'react-native-flash-message'
@@ -27,7 +26,7 @@ export const Products = () => {
   const [products, setProducts] = useState<ProductProps[]>([])
 
   const navigation = useNavigation()
-  const { cartItems, addProduct, removeProduct } = useCart()
+  const { cartItems, addProduct, deleteProduct } = useCart()
 
   const loadProducts = async (): Promise<void> => {
     setLoading(true)
@@ -54,9 +53,7 @@ export const Products = () => {
     !!cartItems.find(item => item.id === product.id)
 
   const handleProduct = (product: ProductProps) =>
-    findProduct(product) ? removeProduct(product) : addProduct(product)
-
-  console.log(cartItems)
+    findProduct(product) ? deleteProduct(product) : addProduct(product)
 
   useEffect(() => {
     loadProducts()
@@ -102,6 +99,7 @@ export const Products = () => {
         <ProductList
           data={products}
           keyExtractor={(item: ProductProps) => item.id}
+          onEndReachedThreshold={0.5}
           renderItem={({ item }) => (
             <ProductCard
               data={item}

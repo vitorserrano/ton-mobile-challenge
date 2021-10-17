@@ -22,7 +22,9 @@ export const Logo = styled.Image`
   height: 53px;
 `
 
-export const CartButton = styled.TouchableOpacity`
+export const CartButton = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8,
+})`
   flex-direction: row;
 `
 
@@ -54,6 +56,7 @@ export const Loader = styled(Flow).attrs(({ theme }) => ({
 }))``
 
 export const Container = styled.View`
+  margin-top: 40px;
   padding-left: 24px;
 `
 

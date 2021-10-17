@@ -5,6 +5,5 @@ export const Text = styled.Text`
     color: ${colors.heading};
     font-family: ${fonts.heading700};
     font-size: 24px;
-    margin-top: 40px;
   `}
 `

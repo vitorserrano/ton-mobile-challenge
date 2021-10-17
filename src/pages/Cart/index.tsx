@@ -2,13 +2,25 @@ import React from 'react'
 
 import { useNavigation } from '@react-navigation/native'
 
-import { useCart } from '../../context/cart'
+import { useCart, CartItemProps } from '../../context/cart'
 import { StatusBar, Layout, Heading, CartItem } from '../../components'
-import { Header, BackButton, Container } from './styles'
 
-export const Cart: React.FC = () => {
+import {
+  Header,
+  BackButton,
+  Container,
+  CartItemList,
+  EmptyContainer,
+  EmptyImageContainer,
+  EmptyImage,
+  Description,
+} from './styles'
+
+import emptyImg from '../../assets/empty-cart.png'
+
+export const Cart = () => {
   const navigation = useNavigation()
-  const { cartItems, removeProduct } = useCart()
+  const { cartItems, handleItem, deleteProduct } = useCart()
 
   const navigateToBack = () => navigation.goBack()
 
@@ -21,15 +33,43 @@ export const Cart: React.FC = () => {
       </Header>
 
       <Container>
-        <Heading>2 produtos adicionados:</Heading>
+        {!!cartItems.length && (
+          <Heading>
+            {`${cartItems.length} ${
+              cartItems.length > 1
+                ? 'produtos adicionados'
+                : 'produto adicionado'
+            }:`}
+          </Heading>
+        )}
 
-        {cartItems.map(item => (
-          <CartItem
-            key={item.id}
-            data={item}
-            onDelete={() => removeProduct(item)}
-          />
-        ))}
+        <CartItemList
+          data={cartItems}
+          keyExtractor={(item: CartItemProps) => item.id}
+          onEndReachedThreshold={0.5}
+          renderItem={({ item }) => (
+            <CartItem
+              key={item.id}
+              data={item}
+              onAdd={() => handleItem(item, 'add')}
+              onRemove={() => handleItem(item, 'remove')}
+              onDelete={() => deleteProduct(item)}
+            />
+          )}
+          ListEmptyComponent={() => (
+            <EmptyContainer>
+              <EmptyImageContainer>
+                <EmptyImage source={emptyImg} resizeMode="contain" />
+              </EmptyImageContainer>
+
+              <Heading>Carrinho vazio</Heading>
+              <Description>
+                Não sabe o que comprar? {'\n'} Milhares de produtos esperam por
+                você!
+              </Description>
+            </EmptyContainer>
+          )}
+        />
       </Container>
     </Layout>
   )
