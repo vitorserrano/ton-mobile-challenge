@@ -3,7 +3,6 @@ import { FlatList } from 'react-native'
 
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
-import { Flow } from 'react-native-animated-spinkit'
 
 import { ProductProps } from '../../services/procucts'
 
@@ -44,18 +43,8 @@ export const NumberOfCartProducts = styled.Text`
   `}
 `
 
-export const LoaderContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`
-
-export const Loader = styled(Flow).attrs(({ theme }) => ({
-  color: theme.colors.green500,
-  size: 52,
-}))``
-
 export const Container = styled.View`
+  flex: 1;
   margin-top: 40px;
   padding-left: 24px;
 `
@@ -68,4 +57,6 @@ export const ProductList = styled(
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-})``
+})`
+  margin-top: 10px;
+`
