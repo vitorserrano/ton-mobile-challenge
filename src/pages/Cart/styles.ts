@@ -78,7 +78,7 @@ export const AllProductsText = styled.Text`
   ${({ theme: { colors, fonts } }) => css`
     color: ${colors.heading};
     font-family: ${fonts.heading700};
-    font-size: 18px;
+    font-size: 16px;
     line-height: 24px;
     margin-left: 6px;
   `}
