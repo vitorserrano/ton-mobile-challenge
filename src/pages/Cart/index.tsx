@@ -72,7 +72,12 @@ export const Cart = () => {
   }, [cartItems])
 
   if (loading) {
-    return <Loader />
+    return (
+      <>
+        <StatusBar variant="secondary" />
+        <Loader />
+      </>
+    )
   }
 
   return (
